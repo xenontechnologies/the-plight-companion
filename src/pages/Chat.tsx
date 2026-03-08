@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Phone, RotateCcw, History, Smile, LogIn, X, Sparkles, Shield, Clock } from "lucide-react";
+import { Send, Phone, RotateCcw, History, Smile, LogIn, X, Sparkles, Shield, Clock, Wind, Flower2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
+import BreathingExercise from "@/components/BreathingExercise";
+import GuidedMeditation from "@/components/GuidedMeditation";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,13 +19,17 @@ const INITIAL_MESSAGE: Msg = {
 const MOCK_RESPONSES: Record<string, string> = {
   sad: "I hear you, and it's completely okay to feel sad. Would you like to try a grounding exercise together, or would you prefer to just talk about what's on your mind?",
   anxious:
-    "Anxiety can feel overwhelming. Let's take a slow breath together — breathe in for 4 counts, hold for 4, and out for 6. How does that feel?",
+    "Anxiety can feel overwhelming. I'd suggest trying a breathing exercise — you can open one right here in the chat using the 🌬️ button below. Or we can just talk it through.",
   angry:
     "It's natural to feel angry sometimes. Your feelings are valid. Would it help to explore what triggered this feeling?",
   lonely:
     "Feeling lonely is hard, and reaching out here shows real courage. I'm glad you're here. Would you like to talk about what's been going on?",
   happy:
     "That's wonderful to hear! 🌟 It's great to check in even when things are going well. What's been bringing you joy lately?",
+  breathe:
+    "Great idea! I've opened the breathing exercise for you. Try the Box Breathing technique — it's a favorite for calming down quickly.",
+  meditate:
+    "A guided meditation sounds perfect right now. I've opened the meditation timer for you. Find a quiet spot and let's begin.",
   default:
     "Thank you for sharing that with me. I want to make sure I understand — could you tell me a bit more about how you're feeling right now?",
 };
@@ -42,14 +48,16 @@ const PAST_CONVERSATIONS = [
   { id: "3", title: "General check-in", date: "1 week ago", preview: "Shared some positive moments…" },
 ];
 
-function getResponse(input: string): string {
+function getResponse(input: string): { text: string; action?: "breathe" | "meditate" } {
   const lower = input.toLowerCase();
-  if (lower.includes("sad") || lower.includes("depress") || lower.includes("cry")) return MOCK_RESPONSES.sad;
-  if (lower.includes("anxi") || lower.includes("worry") || lower.includes("nervous") || lower.includes("panic")) return MOCK_RESPONSES.anxious;
-  if (lower.includes("angry") || lower.includes("frustrat") || lower.includes("mad")) return MOCK_RESPONSES.angry;
-  if (lower.includes("lonely") || lower.includes("alone") || lower.includes("isolat")) return MOCK_RESPONSES.lonely;
-  if (lower.includes("happy") || lower.includes("good") || lower.includes("great") || lower.includes("joy")) return MOCK_RESPONSES.happy;
-  return MOCK_RESPONSES.default;
+  if (lower.includes("breathe") || lower.includes("breathing")) return { text: MOCK_RESPONSES.breathe, action: "breathe" };
+  if (lower.includes("meditat") || lower.includes("mindful") || lower.includes("calm down")) return { text: MOCK_RESPONSES.meditate, action: "meditate" };
+  if (lower.includes("sad") || lower.includes("depress") || lower.includes("cry")) return { text: MOCK_RESPONSES.sad };
+  if (lower.includes("anxi") || lower.includes("worry") || lower.includes("nervous") || lower.includes("panic")) return { text: MOCK_RESPONSES.anxious };
+  if (lower.includes("angry") || lower.includes("frustrat") || lower.includes("mad")) return { text: MOCK_RESPONSES.angry };
+  if (lower.includes("lonely") || lower.includes("alone") || lower.includes("isolat")) return { text: MOCK_RESPONSES.lonely };
+  if (lower.includes("happy") || lower.includes("good") || lower.includes("great") || lower.includes("joy")) return { text: MOCK_RESPONSES.happy };
+  return { text: MOCK_RESPONSES.default };
 }
 
 const Chat = () => {
@@ -60,6 +68,8 @@ const Chat = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showMoods, setShowMoods] = useState(true);
+  const [showBreathing, setShowBreathing] = useState(false);
+  const [showMeditation, setShowMeditation] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,7 +93,10 @@ const Chat = () => {
     setTyping(true);
 
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: "assistant", content: getResponse(msg) }]);
+      const response = getResponse(msg);
+      setMessages((prev) => [...prev, { role: "assistant", content: response.text }]);
+      if (response.action === "breathe") setShowBreathing(true);
+      if (response.action === "meditate") setShowMeditation(true);
       setTyping(false);
     }, 1200 + Math.random() * 800);
   };
@@ -218,6 +231,18 @@ const Chat = () => {
               </div>
             )}
 
+            {/* Wellness widgets */}
+            <AnimatePresence>
+              {showBreathing && (
+                <BreathingExercise onClose={() => setShowBreathing(false)} />
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {showMeditation && (
+                <GuidedMeditation onClose={() => setShowMeditation(false)} />
+              )}
+            </AnimatePresence>
+
             {/* Login prompt */}
             <AnimatePresence>
               {showLoginPrompt && (
@@ -261,6 +286,27 @@ const Chat = () => {
         {/* Input */}
         <div className="border-t border-border/60 bg-background">
           <div className="mx-auto max-w-2xl p-4">
+            {/* Wellness toolbar */}
+            <div className="flex gap-2 mb-3">
+              <button
+                type="button"
+                onClick={() => { setShowBreathing(!showBreathing); setShowMeditation(false); }}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  showBreathing ? "bg-primary/15 text-primary" : "bg-muted/60 text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                <Wind className="h-3.5 w-3.5" /> Breathe
+              </button>
+              <button
+                type="button"
+                onClick={() => { setShowMeditation(!showMeditation); setShowBreathing(false); }}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  showMeditation ? "bg-lavender/20 text-lavender" : "bg-muted/60 text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                <Flower2 className="h-3.5 w-3.5" /> Meditate
+              </button>
+            </div>
             <form
               onSubmit={(e) => {
                 e.preventDefault();

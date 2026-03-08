@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
+import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -27,6 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -35,6 +37,7 @@ const App = () => (
           </Routes>
           <Routes>
             <Route path="/chat" element={null} />
+            <Route path="/dashboard" element={null} />
             <Route path="/login" element={null} />
             <Route path="/signup" element={null} />
             <Route path="/forgot-password" element={null} />
