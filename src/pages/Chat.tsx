@@ -19,13 +19,17 @@ const INITIAL_MESSAGE: Msg = {
 const MOCK_RESPONSES: Record<string, string> = {
   sad: "I hear you, and it's completely okay to feel sad. Would you like to try a grounding exercise together, or would you prefer to just talk about what's on your mind?",
   anxious:
-    "Anxiety can feel overwhelming. Let's take a slow breath together — breathe in for 4 counts, hold for 4, and out for 6. How does that feel?",
+    "Anxiety can feel overwhelming. I'd suggest trying a breathing exercise — you can open one right here in the chat using the 🌬️ button below. Or we can just talk it through.",
   angry:
     "It's natural to feel angry sometimes. Your feelings are valid. Would it help to explore what triggered this feeling?",
   lonely:
     "Feeling lonely is hard, and reaching out here shows real courage. I'm glad you're here. Would you like to talk about what's been going on?",
   happy:
     "That's wonderful to hear! 🌟 It's great to check in even when things are going well. What's been bringing you joy lately?",
+  breathe:
+    "Great idea! I've opened the breathing exercise for you. Try the Box Breathing technique — it's a favorite for calming down quickly.",
+  meditate:
+    "A guided meditation sounds perfect right now. I've opened the meditation timer for you. Find a quiet spot and let's begin.",
   default:
     "Thank you for sharing that with me. I want to make sure I understand — could you tell me a bit more about how you're feeling right now?",
 };
