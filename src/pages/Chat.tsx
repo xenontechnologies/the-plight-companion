@@ -93,7 +93,10 @@ const Chat = () => {
     setTyping(true);
 
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: "assistant", content: getResponse(msg) }]);
+      const response = getResponse(msg);
+      setMessages((prev) => [...prev, { role: "assistant", content: response.text }]);
+      if (response.action === "breathe") setShowBreathing(true);
+      if (response.action === "meditate") setShowMeditation(true);
       setTyping(false);
     }, 1200 + Math.random() * 800);
   };
