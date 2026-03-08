@@ -68,6 +68,7 @@ const Chat = () => {
   const [showMoods, setShowMoods] = useState(true);
   const [showBreathing, setShowBreathing] = useState(false);
   const [showMeditation, setShowMeditation] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
