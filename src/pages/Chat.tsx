@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Phone, RotateCcw, History, Smile, LogIn, X, Sparkles, Shield, Clock } from "lucide-react";
+import { Send, Phone, RotateCcw, History, Smile, LogIn, X, Sparkles, Shield, Clock, Wind, Flower2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import ChatMessage from "@/components/ChatMessage";
 import TypingIndicator from "@/components/TypingIndicator";
+import BreathingExercise from "@/components/BreathingExercise";
+import GuidedMeditation from "@/components/GuidedMeditation";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 
