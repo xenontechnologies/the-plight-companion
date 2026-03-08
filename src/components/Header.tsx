@@ -1,11 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X, Heart, LogIn, LogOut, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   const links = [
     { to: "/", label: "Home" },
@@ -39,6 +41,26 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
+          {user ? (
+            <div className="ml-2 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <User className="h-4 w-4" />
+              </div>
+              <button
+                onClick={logout}
+                className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="ml-2 inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
+            >
+              <LogIn className="h-4 w-4" /> Sign in
+            </Link>
+          )}
         </nav>
 
         <button
@@ -73,6 +95,22 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
+              {user ? (
+                <button
+                  onClick={() => { logout(); setOpen(false); }}
+                  className="rounded-lg px-4 py-3 text-left text-sm font-medium text-muted-foreground hover:bg-muted"
+                >
+                  Sign out
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-4 py-3 text-sm font-medium text-primary hover:bg-primary/10"
+                >
+                  Sign in
+                </Link>
+              )}
             </nav>
           </motion.div>
         )}
