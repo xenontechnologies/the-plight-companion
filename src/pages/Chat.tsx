@@ -231,6 +231,18 @@ const Chat = () => {
               </div>
             )}
 
+            {/* Wellness widgets */}
+            <AnimatePresence>
+              {showBreathing && (
+                <BreathingExercise onClose={() => setShowBreathing(false)} />
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {showMeditation && (
+                <GuidedMeditation onClose={() => setShowMeditation(false)} />
+              )}
+            </AnimatePresence>
+
             {/* Login prompt */}
             <AnimatePresence>
               {showLoginPrompt && (
