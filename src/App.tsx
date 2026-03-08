@@ -37,6 +37,7 @@ const App = () => (
           </Routes>
           <Routes>
             <Route path="/chat" element={null} />
+            <Route path="/dashboard" element={null} />
             <Route path="/login" element={null} />
             <Route path="/signup" element={null} />
             <Route path="/forgot-password" element={null} />

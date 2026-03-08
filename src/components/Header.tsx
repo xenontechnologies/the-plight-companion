@@ -12,6 +12,7 @@ const Header = () => {
   const links = [
     { to: "/", label: "Home" },
     { to: "/chat", label: "Chat Now" },
+    ...(user ? [{ to: "/dashboard", label: "Dashboard" }] : []),
     { to: "/about", label: "About Us" },
   ];
 
