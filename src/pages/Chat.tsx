@@ -62,7 +62,8 @@ const Chat = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showMoods, setShowMoods] = useState(true);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showBreathing, setShowBreathing] = useState(false);
+  const [showMeditation, setShowMeditation] = useState(false);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
