@@ -30,9 +30,9 @@ const ChatMessage = ({ role, content }: ChatMessageProps) => {
             : "bg-card text-card-foreground shadow-card rounded-tl-md"
         }`}
       >
-        <ReactMarkdown className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1">
-          {content}
-        </ReactMarkdown>
+        <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
       </div>
     </motion.div>
   );
