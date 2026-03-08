@@ -48,14 +48,16 @@ const PAST_CONVERSATIONS = [
   { id: "3", title: "General check-in", date: "1 week ago", preview: "Shared some positive moments…" },
 ];
 
-function getResponse(input: string): string {
+function getResponse(input: string): { text: string; action?: "breathe" | "meditate" } {
   const lower = input.toLowerCase();
-  if (lower.includes("sad") || lower.includes("depress") || lower.includes("cry")) return MOCK_RESPONSES.sad;
-  if (lower.includes("anxi") || lower.includes("worry") || lower.includes("nervous") || lower.includes("panic")) return MOCK_RESPONSES.anxious;
-  if (lower.includes("angry") || lower.includes("frustrat") || lower.includes("mad")) return MOCK_RESPONSES.angry;
-  if (lower.includes("lonely") || lower.includes("alone") || lower.includes("isolat")) return MOCK_RESPONSES.lonely;
-  if (lower.includes("happy") || lower.includes("good") || lower.includes("great") || lower.includes("joy")) return MOCK_RESPONSES.happy;
-  return MOCK_RESPONSES.default;
+  if (lower.includes("breathe") || lower.includes("breathing")) return { text: MOCK_RESPONSES.breathe, action: "breathe" };
+  if (lower.includes("meditat") || lower.includes("mindful") || lower.includes("calm down")) return { text: MOCK_RESPONSES.meditate, action: "meditate" };
+  if (lower.includes("sad") || lower.includes("depress") || lower.includes("cry")) return { text: MOCK_RESPONSES.sad };
+  if (lower.includes("anxi") || lower.includes("worry") || lower.includes("nervous") || lower.includes("panic")) return { text: MOCK_RESPONSES.anxious };
+  if (lower.includes("angry") || lower.includes("frustrat") || lower.includes("mad")) return { text: MOCK_RESPONSES.angry };
+  if (lower.includes("lonely") || lower.includes("alone") || lower.includes("isolat")) return { text: MOCK_RESPONSES.lonely };
+  if (lower.includes("happy") || lower.includes("good") || lower.includes("great") || lower.includes("joy")) return { text: MOCK_RESPONSES.happy };
+  return { text: MOCK_RESPONSES.default };
 }
 
 const Chat = () => {
