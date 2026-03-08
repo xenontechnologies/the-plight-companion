@@ -286,6 +286,27 @@ const Chat = () => {
         {/* Input */}
         <div className="border-t border-border/60 bg-background">
           <div className="mx-auto max-w-2xl p-4">
+            {/* Wellness toolbar */}
+            <div className="flex gap-2 mb-3">
+              <button
+                type="button"
+                onClick={() => { setShowBreathing(!showBreathing); setShowMeditation(false); }}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  showBreathing ? "bg-primary/15 text-primary" : "bg-muted/60 text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                <Wind className="h-3.5 w-3.5" /> Breathe
+              </button>
+              <button
+                type="button"
+                onClick={() => { setShowMeditation(!showMeditation); setShowBreathing(false); }}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  showMeditation ? "bg-lavender/20 text-lavender" : "bg-muted/60 text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                <Flower2 className="h-3.5 w-3.5" /> Meditate
+              </button>
+            </div>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
